@@ -11,6 +11,15 @@ from prediction_contract.response_schema import EstimateResponse
 from prediction_contract.contract_version import ContractVersion
 
 app = FastAPI(title="CESAR Prediction API", version="0.1.0")
+"""allow ui request"""
+from fastapi.middleware.cors import CORSMiddleware
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Load the model and contract once and reuse for every request. We cache in _loaded so we do not
 # read from disk on each call. If CESAR_MODEL_PATH or CESAR_CONTRACT_PATH are missing, we return 503
@@ -48,3 +57,6 @@ def post_estimate(
         return estimate_from_model(model, request, contract)
     except InvalidFeatureError as e:
         raise HTTPException(status_code=422, detail=str(e))
+        
+
+

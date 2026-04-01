@@ -31,7 +31,68 @@ case_house_rhone = TestCase(
     ),
 )
 
+# Case 3: Small studio in Marseille, 20 m², 1 room
+case_studio_marseille = TestCase(
+    name="Marseille studio 20m2 1 room",
+    input=TestCaseInput(
+        surface_reelle_bati=20.0,
+        nombre_pieces_principales=1.0,
+        code_departement="13",
+        type_local="Appartement",
+    ),
+)
+
+# Case 4: Large house in Bordeaux, 200 m², 8 rooms
+case_large_house_bordeaux = TestCase(
+    name="Bordeaux large house 200m2 8 rooms",
+    input=TestCaseInput(
+        surface_reelle_bati=200.0,
+        nombre_pieces_principales=8.0,
+        code_departement="33",
+        type_local="Maison",
+    ),
+)
+
+# Case 5: Dépendance in Lyon, 15 m², 1 room
+case_dependance_lyon = TestCase(
+    name="Lyon dependance 15m2",
+    input=TestCaseInput(
+        surface_reelle_bati=15.0,
+        nombre_pieces_principales=1.0,
+        code_departement="69",
+        type_local="Dépendance",
+    ),
+)
+
+# Case 6: Commercial property in Paris, 80 m², 3 rooms
+case_commercial_paris = TestCase(
+    name="Paris commercial 80m2",
+    input=TestCaseInput(
+        surface_reelle_bati=80.0,
+        nombre_pieces_principales=3.0,
+        code_departement="75",
+        type_local="Local industriel. commercial ou assimilé",
+    ),
+)
+
+# Case 7: Invalid type_local — expect 422
+case_invalid_type = TestCase(
+    name="Invalid type_local returns 422",
+    input=TestCaseInput(
+        surface_reelle_bati=50.0,
+        nombre_pieces_principales=3.0,
+        code_departement="75",
+        type_local="InvalidType",
+    ),
+    expected_status=422,
+)
+
 ACCEPTANCE_TEST_CASES = [
     case_paris_apartment,
     case_house_rhone,
+    case_studio_marseille,
+    case_large_house_bordeaux,
+    case_dependance_lyon,
+    case_commercial_paris,
+    case_invalid_type,
 ]

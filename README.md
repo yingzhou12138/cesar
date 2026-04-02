@@ -148,8 +148,11 @@ Organized by **difficulty / scope** (from small to larger).
 1. **Easier**
    - Add more acceptance test cases in `model_acceptance_tests/test_cases.py`; optional property-based tests.（completed）
    
-   - UI: improve map (e.g. click on department to set `code_departement`); display value range if the API returns `value_low_eur` / `value_high_eur`.
-   - Confidence intervals: in `estimate_from_artifact` and the API response, add optional `value_low_eur` / `value_high_eur` (e.g. quantile regression).
+   - UI: improve map (e.g. click on department to set `code_departement`); (we plan to do)
+         
+         display value range if the API returns `value_low_eur` / `value_high_eur`. (completed)
+   
+   - Confidence intervals: in `estimate_from_artifact` and the API response, add optional `value_low_eur` / `value_high_eur` (e.g. quantile regression).(completed)
 
 2. **Medium**
    - Complete the API version comparison: diff responses, define regression criteria, output a small report (HTML or JSON).

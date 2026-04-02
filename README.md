@@ -91,6 +91,10 @@ Test cases are defined in Python in `model_acceptance_tests/test_cases.py`. Edit
 export CESAR_API_URL=http://localhost:8000
 cesar acceptance-tests run
 ```
+To run property-based tests (requires `hypothesis`):
+```bash
+python -m pytest model_acceptance_tests/test_properties.py -v
+```
 
 ### 8. Version comparison
 
@@ -142,7 +146,8 @@ If you compute a metric (e.g. test MAE), pass it as `metrics={"mae": 12000}`. To
 Organized by **difficulty / scope** (from small to larger).
 
 1. **Easier**
-   - Add more acceptance test cases in `model_acceptance_tests/test_cases.py`; optional property-based tests.
+   - Add more acceptance test cases in `model_acceptance_tests/test_cases.py`; optional property-based tests.（completed）
+   
    - UI: improve map (e.g. click on department to set `code_departement`); display value range if the API returns `value_low_eur` / `value_high_eur`.
    - Confidence intervals: in `estimate_from_artifact` and the API response, add optional `value_low_eur` / `value_high_eur` (e.g. quantile regression).
 

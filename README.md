@@ -93,7 +93,7 @@ cesar acceptance-tests run
 ```
 To run property-based tests (requires `hypothesis`):
 ```bash
-python -m pytest model_acceptance_tests/test_properties.py -v
+cesar property-tests run
 ```
 
 ### 8. Version comparison

@@ -7,6 +7,7 @@ import joblib
 import numpy as np
 import pandas as pd
 from sklearn.ensemble import RandomForestRegressor
+from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.preprocessing import OneHotEncoder
 
 # joblib is the recommended way to persist sklearn models (handles numpy arrays and large objects
@@ -50,12 +51,28 @@ def build_feature_matrix(df: pd.DataFrame) -> np.ndarray:
     return np.column_stack([surface.values, pieces.values, dept.values, type_encoded])
 
 
-def train_on_dataframe(df: pd.DataFrame) -> Any:
+def train_on_dataframe(df: pd.DataFrame) -> dict[str,Any]:
     X = build_feature_matrix(df)
     y = df[TARGET_NAME].values.astype(np.float64)
+    
     reg = RandomForestRegressor(n_estimators=50, max_depth=10, random_state=42)
     reg.fit(X, y)
-    return reg
+    
+    models = {"main":reg} #keep the estimate of random forest as the main estimate
+    
+    #using gradient boosting for the confidence interval
+    for quantile, name in [(0.05, "low"), (0.95, "high")]:
+        gbr = GradientBoostingRegressor(
+            loss="quantile",
+            alpha=quantile,
+            n_estimators=50,
+            max_depth=5,
+            random_state=42,
+        )
+        gbr.fit(X, y)
+        models[name] = gbr
+    
+    return models
 
 
 def export_artifact(

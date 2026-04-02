@@ -44,7 +44,25 @@ def request_to_feature_row(request: EstimateRequest, contract: ContractVersion) 
 
 
 def estimate_from_model(model: Any, request: EstimateRequest, contract: ContractVersion) -> EstimateResponse:
+    
     X = request_to_feature_row(request, contract)
-    pred = model.predict(X)
-    value = float(pred.flat[0])
-    return EstimateResponse(estimated_value_eur=value)
+    
+    if isinstance(model, dict) and "main" in model:
+        
+        value = float(model["main"].predict(X).flat[0])
+        value_low = float(model["low"].predict(X).flat[0])
+        value_high = float(model["high"].predict(X).flat[0])
+        
+        return EstimateResponse(
+            estimated_value_eur=value,
+            value_low_eur=value_low,
+            value_high_eur=value_high,
+        )
+    
+    else:
+        
+        pred = model.predict(X)
+        
+        value = float(pred.flat[0])
+        
+        return EstimateResponse(estimated_value_eur=value)

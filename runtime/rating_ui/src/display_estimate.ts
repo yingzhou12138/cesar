@@ -4,7 +4,7 @@ import type { EstimateParams } from "./api_client";
 function renderResult(container: HTMLElement, value: number, low?: number, high?: number): void {
   let html = `<p><strong>Estimated value:</strong> ${Math.round(value).toLocaleString("en-GB")} €</p>`;
   if (low != null && high != null) {
-    html += `<p>Range: ${Math.round(low).toLocaleString("en-GB")} – ${Math.round(high).toLocaleString("en-GB")} €</p>`;
+    html += `<p>90% confidence interval: ${Math.round(low).toLocaleString("en-GB")} – ${Math.round(high).toLocaleString("en-GB")} €</p>`;
   }
   container.innerHTML = html;
 }
